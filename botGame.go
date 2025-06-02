@@ -27,6 +27,8 @@ func main() {
         log.Panic(err)
     }
 
+    log.Printf("Бот успешно запущен! Имя бота: %s", bot.Self.UserName)
+
     u := tgbotapi.NewUpdate(0)
     updates := bot.GetUpdatesChan(u)
 
@@ -34,6 +36,9 @@ func main() {
         if update.Message == nil {
             continue
         }
+
+        // Log user message
+        log.Printf("Received message from user %d: %s", update.Message.From.ID, update.Message.Text)
 
         msg := tgbotapi.NewMessage(update.Message.Chat.ID, update.Message.Text)
 
@@ -151,5 +156,5 @@ func calculate(expression string) string {
     if err != nil {
         return fmt.Sprintf("Ошибка вычисления выражения: %v", err)
     }
-    return fmt.Sprintf("%v", result)
+    return fmt.Sprintf("Результат: %v", result)
 } 
